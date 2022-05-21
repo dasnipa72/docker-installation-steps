@@ -1,0 +1,23 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  api:
+    build: ./api
+    ports:
+      - "8989:8989"
+    environment:
+      - DEBUG=True
+    volumes:
+      - ./api/src/:/app/
+  webapp:
+    build: ./webapp
+    ports:
+      - "8060:80"
+    environment:
+      - INSTANCE_STATUS=Local
+    volumes:
+      - ./webapp/website:/var/www/html/
+    depends_on:
+      - api
+    # Example if you wanted to use an official docker-image
+#   redis:
+#     image: redis
